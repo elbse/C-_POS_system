@@ -1,0 +1,15 @@
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\C#_POS_System.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\C#_POS_System.AssemblyInfoInputs.cache
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\C#_POS_System.AssemblyInfo.cs
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\C#_POS_System.csproj.CoreCompileInputs.cache
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\C#_POS_System.sourcelink.json
+C:\Users\Charisse\C#_POS_System\bin\Debug\net10.0-windows\C#_POS_System.exe
+C:\Users\Charisse\C#_POS_System\bin\Debug\net10.0-windows\C#_POS_System.deps.json
+C:\Users\Charisse\C#_POS_System\bin\Debug\net10.0-windows\C#_POS_System.runtimeconfig.json
+C:\Users\Charisse\C#_POS_System\bin\Debug\net10.0-windows\C#_POS_System.dll
+C:\Users\Charisse\C#_POS_System\bin\Debug\net10.0-windows\C#_POS_System.pdb
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\C#_POS_System.dll
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\refint\C#_POS_System.dll
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\C#_POS_System.pdb
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\C#_POS_System.genruntimeconfig.cache
+C:\Users\Charisse\C#_POS_System\obj\Debug\net10.0-windows\ref\C#_POS_System.dll
