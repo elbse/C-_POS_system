@@ -59,12 +59,12 @@ A new window displays the formatted receipt including:
 ## 📁 Project Structure
 
 📦 SimplePOS
-├── ▶️ Program.cs
-├── 📝 Form1.cs
-├── 🧩 Form1.Designer.cs
-├── 🧾 ReceiptForm.cs
-├── 🧱 ReceiptForm.Designer.cs
-└── 📘 README.md
+-├── ▶️ Program.cs
+-├── 📝 Form1.cs
+-├── 🧩 Form1.Designer.cs
+-├── 🧾 ReceiptForm.cs
+-├── 🧱 ReceiptForm.Designer.cs
+-└── 📘 README.md
 
 
 ---
