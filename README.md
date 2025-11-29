@@ -58,13 +58,13 @@ A new window displays the formatted receipt including:
 
 ## 📁 Project Structure
 
-SimplePOS
-├── Form1.cs (Main POS logic)
-├── Form1.Designer.cs (Main POS UI layout)
-├── ReceiptForm.cs (Receipt popup logic)
-├── ReceiptForm.Designer.cs (Receipt UI layout)
-├── Program.cs (Application entry point)
-└── README.md (Documentation)
+📦 SimplePOS
+├── ▶️ Program.cs
+├── 📝 Form1.cs
+├── 🧩 Form1.Designer.cs
+├── 🧾 ReceiptForm.cs
+├── 🧱 ReceiptForm.Designer.cs
+└── 📘 README.md
 
 
 ---
