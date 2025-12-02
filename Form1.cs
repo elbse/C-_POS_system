@@ -8,11 +8,9 @@ namespace C__POS_System
     {
         Dictionary<string, double> products = new Dictionary<string, double>()
         {
-            {"Apple", 15.00},
-            {"Bread", 35.00},
-            {"Milk", 28.00},
-            {"Coffee", 70.00},
-            {"Chocolate", 55.00}
+            {"Burger", 50.00},
+            {"Fries", 30.00},
+            {"Spaghetti", 50.00}
         };
 
         double subtotal, tax, total;
