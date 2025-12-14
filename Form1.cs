@@ -310,6 +310,8 @@ namespace SimplePOS
             cartTable.Rows.Clear();
             UpdateTotal();
             RefreshProductComboBox(); // Refresh to show updated stock
+
+            
         }
 
         private void btnReceipt_Click(object sender, EventArgs e)
@@ -320,7 +322,7 @@ namespace SimplePOS
                 return;
             }
 
-            string receipt = "********** Simple POS Receipt **********\n";
+            string receipt = "********** POS Receipt **********\n";
             foreach (DataRow row in cartTable.Rows)
             {
                 receipt += $"{row["Product"]} x {row["Quantity"]} = {((decimal)row["Total"]):C2}\n";
