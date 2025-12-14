@@ -44,11 +44,11 @@ namespace SimplePOS
             products = new Dictionary<string, Product>(StringComparer.OrdinalIgnoreCase);
             
             // Add some default products with stock
-            AddProduct("Apple", 0.99m, 50);
-            AddProduct("Banana", 0.59m, 30);
-            AddProduct("Milk", 2.49m, 20);
-            AddProduct("Bread", 1.99m, 25);
-            AddProduct("Eggs", 3.49m, 40);
+            AddProduct("Apple", 15.00m, 50);
+            AddProduct("Banana", 10.00m, 30);
+            AddProduct("Milk", 25.49m, 20);
+            AddProduct("Bread", 45.99m, 25);
+            AddProduct("Eggs", 11.00m, 40);
 
             RefreshProductComboBox();
         }
@@ -137,7 +137,7 @@ namespace SimplePOS
 
             string productName = cmbProduct.Text.Trim();
 
-            // Check if product exists in inventory
+            //Check if product exists in inventory
             if (products.TryGetValue(productName, out Product existingProduct))
             {
                 // Product exists - check stock availability
