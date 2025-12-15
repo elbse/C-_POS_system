@@ -260,7 +260,8 @@ namespace SimplePOS
             ClearInputs();
         }
 
-        //private string lastReceipt = string.Empty;//ADDED
+        private const decimal TAX_RATE = 0.12m; // 12% tax
+
 
         private void btnPurchase_Click(object sender, EventArgs e)
         {
@@ -305,12 +306,23 @@ namespace SimplePOS
                 }
             }
 
-            decimal total = CalculateTotal();
+            decimal subTotal = CalculateTotal();
+            decimal tax = subTotal * TAX_RATE;
+            decimal grandTotal = subTotal + tax;
+
 
             //lastReceipt = GenerateReceipt(cartTable); //ADDED
 
-            MessageBox.Show($"Purchase successful!\n\nTotal amount: {total:C2}\n\nInventory quantities have been updated.",
-                "Purchase Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                $"Purchase successful!\n\n" +
+                $"Subtotal: {subTotal:C2}\n" +
+                $"Tax (12%): {tax:C2}\n" +
+                $"Total: {grandTotal:C2}",
+                "Purchase Complete",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+
 
             string receipt = "********** POS Receipt **********\n";
 
@@ -320,11 +332,12 @@ namespace SimplePOS
             }
 
             receipt += "---------------------------------------\n";
-            receipt += $"TOTAL: {total:C2}\n";
+            receipt += $"SUBTOTAL: {subTotal:C2}\n";
+            receipt += $"TAX (12%): {tax:C2}\n";
+            receipt += $"TOTAL: {grandTotal:C2}\n";
             receipt += "***************************************";
 
             MessageBox.Show(receipt, "Receipt", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
 
             // Clear cart
             cartTable.Rows.Clear();
@@ -333,40 +346,6 @@ namespace SimplePOS
 
 
         }
-
-        // private string GenerateReceipt(DataTable table) //ADDED
-        // {
-        //     StringBuilder receipt = new StringBuilder();
-
-        //     receipt.AppendLine("********** POS Receipt **********");
-        //     foreach (DataRow row in table.Rows)
-        //     {
-        //         receipt.AppendLine($"{row["Product"]} x {row["Quantity"]} = {((decimal)row["Total"]):C2}");
-        //     }
-        //     receipt.AppendLine("---------------------------------------");
-        //     receipt.AppendLine($"TOTAL: {CalculateTotal():C2}");
-        //     receipt.AppendLine("***************************************");
-
-        //     return receipt.ToString();
-        // }
-
-
-        // private void btnReceipt_Click(object sender, EventArgs e)
-        // {
-        //     if (string.IsNullOrEmpty(lastReceipt))
-        //     {
-        //         MessageBox.Show(
-        //             "No completed purchase found. Please make a purchase first.",
-        //             "Receipt",
-        //             MessageBoxButtons.OK,
-        //             MessageBoxIcon.Information
-        //         );
-        //         return;
-        //     }
-
-        //     MessageBox.Show(lastReceipt, "Receipt");
-        // }
-
 
         private void dgvCart_CellClick(object sender, DataGridViewCellEventArgs e)
         {

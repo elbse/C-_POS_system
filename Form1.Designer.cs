@@ -100,7 +100,7 @@
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.ForeColor = System.Drawing.Color.White;
             this.btnAdd.Location = new System.Drawing.Point(15, 45);
-            this.btnAdd.Size = new System.Drawing.Size(80, 30);
+            this.btnAdd.Size = new System.Drawing.Size(100, 30);
             this.btnAdd.Text = "Add";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
 
@@ -108,8 +108,8 @@
             this.btnUpdate.BackColor = System.Drawing.Color.FromArgb(33, 150, 243);
             this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdate.ForeColor = System.Drawing.Color.White;
-            this.btnUpdate.Location = new System.Drawing.Point(100, 45);
-            this.btnUpdate.Size = new System.Drawing.Size(80, 30);
+            this.btnUpdate.Location = new System.Drawing.Point(115, 45);
+            this.btnUpdate.Size = new System.Drawing.Size(100, 30);
             this.btnUpdate.Text = "Update";
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
 
@@ -117,8 +117,8 @@
             this.btnDelete.BackColor = System.Drawing.Color.FromArgb(244, 67, 54);
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(185, 45);
-            this.btnDelete.Size = new System.Drawing.Size(80, 30);
+            this.btnDelete.Location = new System.Drawing.Point(215, 45);
+            this.btnDelete.Size = new System.Drawing.Size(100, 30);
             this.btnDelete.Text = "Delete";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
 
@@ -126,8 +126,8 @@
             this.btnClear.BackColor = System.Drawing.Color.FromArgb(158, 158, 158);
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClear.ForeColor = System.Drawing.Color.White;
-            this.btnClear.Location = new System.Drawing.Point(270, 45);
-            this.btnClear.Size = new System.Drawing.Size(80, 30);
+            this.btnClear.Location = new System.Drawing.Point(315, 45);
+            this.btnClear.Size = new System.Drawing.Size(100, 30);
             this.btnClear.Text = "Clear";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
 
@@ -135,19 +135,10 @@
             this.btnPurchase.BackColor = System.Drawing.Color.FromArgb(0, 150, 136);
             this.btnPurchase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPurchase.ForeColor = System.Drawing.Color.White;
-            this.btnPurchase.Location = new System.Drawing.Point(355, 45);
-            this.btnPurchase.Size = new System.Drawing.Size(80, 30);
+            this.btnPurchase.Location = new System.Drawing.Point(415, 45);
+            this.btnPurchase.Size = new System.Drawing.Size(100, 30);
             this.btnPurchase.Text = "Purchase";
             this.btnPurchase.Click += new System.EventHandler(this.btnPurchase_Click);
-
-            // btnReceipt
-            // this.btnReceipt.BackColor = System.Drawing.Color.FromArgb(255, 152, 0);
-            // this.btnReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            // this.btnReceipt.ForeColor = System.Drawing.Color.White;
-            // this.btnReceipt.Location = new System.Drawing.Point(440, 45);
-            // this.btnReceipt.Size = new System.Drawing.Size(80, 30);
-            // this.btnReceipt.Text = "Receipt";
-            // this.btnReceipt.Click += new System.EventHandler(this.btnReceipt_Click);
 
             // btnManageProducts
             this.btnManageProducts = new System.Windows.Forms.Button();
