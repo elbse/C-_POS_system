@@ -13,9 +13,6 @@ namespace SimplePOS
         }
 
 
-
-
-
         private void GenerateReceipt(DataTable cart)
         {
             decimal subtotal = 0;

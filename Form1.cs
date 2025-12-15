@@ -31,6 +31,7 @@ namespace SimplePOS
         private DataTable cartTable;
         private Dictionary<string, Product> products; // Store products by name for easy lookup
 
+
         public Form1()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace SimplePOS
         {
             // Initialize product dictionary
             products = new Dictionary<string, Product>(StringComparer.OrdinalIgnoreCase);
-            
+
             // Add some default products with stock
             AddProduct("Apple", 15.00m, 50);
             AddProduct("Banana", 10.00m, 30);
@@ -143,7 +144,7 @@ namespace SimplePOS
                 // Product exists - check stock availability
                 if (existingProduct.Quantity < quantity)
                 {
-                    MessageBox.Show($"Insufficient stock! Available: {existingProduct.Quantity}", 
+                    MessageBox.Show($"Insufficient stock! Available: {existingProduct.Quantity}",
                         "Stock Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -221,7 +222,7 @@ namespace SimplePOS
                 // Check if we have enough stock for the increase
                 if (quantityDifference > 0 && product.Quantity < quantityDifference)
                 {
-                    MessageBox.Show($"Insufficient stock! Available: {product.Quantity}", 
+                    MessageBox.Show($"Insufficient stock! Available: {product.Quantity}",
                         "Stock Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -258,6 +259,8 @@ namespace SimplePOS
         {
             ClearInputs();
         }
+
+        //private string lastReceipt = string.Empty;//ADDED
 
         private void btnPurchase_Click(object sender, EventArgs e)
         {
@@ -303,36 +306,67 @@ namespace SimplePOS
             }
 
             decimal total = CalculateTotal();
+
+            //lastReceipt = GenerateReceipt(cartTable); //ADDED
+
             MessageBox.Show($"Purchase successful!\n\nTotal amount: {total:C2}\n\nInventory quantities have been updated.",
                 "Purchase Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            string receipt = "********** POS Receipt **********\n";
+
+            foreach (DataRow row in cartTable.Rows)
+            {
+                receipt += $"{row["Product"]} x {row["Quantity"]} = {((decimal)row["Total"]):C2}\n";
+            }
+
+            receipt += "---------------------------------------\n";
+            receipt += $"TOTAL: {total:C2}\n";
+            receipt += "***************************************";
+
+            MessageBox.Show(receipt, "Receipt", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 
             // Clear cart
             cartTable.Rows.Clear();
             UpdateTotal();
             RefreshProductComboBox(); // Refresh to show updated stock
 
-            
+
         }
 
-        private void btnReceipt_Click(object sender, EventArgs e)
-        {
-            if (cartTable.Rows.Count == 0)
-            {
-                MessageBox.Show("Cart is empty. Add items to generate a receipt.", "Receipt", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+        // private string GenerateReceipt(DataTable table) //ADDED
+        // {
+        //     StringBuilder receipt = new StringBuilder();
 
-            string receipt = "********** POS Receipt **********\n";
-            foreach (DataRow row in cartTable.Rows)
-            {
-                receipt += $"{row["Product"]} x {row["Quantity"]} = {((decimal)row["Total"]):C2}\n";
-            }
-            receipt += $"---------------------------------------\n";
-            receipt += $"TOTAL: {CalculateTotal():C2}\n";
-            receipt += "***************************************";
+        //     receipt.AppendLine("********** POS Receipt **********");
+        //     foreach (DataRow row in table.Rows)
+        //     {
+        //         receipt.AppendLine($"{row["Product"]} x {row["Quantity"]} = {((decimal)row["Total"]):C2}");
+        //     }
+        //     receipt.AppendLine("---------------------------------------");
+        //     receipt.AppendLine($"TOTAL: {CalculateTotal():C2}");
+        //     receipt.AppendLine("***************************************");
 
-            MessageBox.Show(receipt, "Receipt");
-        }
+        //     return receipt.ToString();
+        // }
+
+
+        // private void btnReceipt_Click(object sender, EventArgs e)
+        // {
+        //     if (string.IsNullOrEmpty(lastReceipt))
+        //     {
+        //         MessageBox.Show(
+        //             "No completed purchase found. Please make a purchase first.",
+        //             "Receipt",
+        //             MessageBoxButtons.OK,
+        //             MessageBoxIcon.Information
+        //         );
+        //         return;
+        //     }
+
+        //     MessageBox.Show(lastReceipt, "Receipt");
+        // }
+
 
         private void dgvCart_CellClick(object sender, DataGridViewCellEventArgs e)
         {

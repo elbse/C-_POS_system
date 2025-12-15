@@ -10,7 +10,8 @@
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button btnReceipt;
+
+        // private System.Windows.Forms.Button btnReceipt;
         private System.Windows.Forms.Button btnPurchase;
         private System.Windows.Forms.Button btnManageProducts;
         private System.Windows.Forms.DataGridView dgvCart;
@@ -18,6 +19,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        
 
         protected override void Dispose(bool disposing)
         {
@@ -44,7 +46,7 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
-            this.btnReceipt = new System.Windows.Forms.Button();
+            // this.btnReceipt = new System.Windows.Forms.Button();
             this.btnPurchase = new System.Windows.Forms.Button();
             this.dgvCart = new System.Windows.Forms.DataGridView();
             this.lblTotal = new System.Windows.Forms.Label();
@@ -139,13 +141,13 @@
             this.btnPurchase.Click += new System.EventHandler(this.btnPurchase_Click);
 
             // btnReceipt
-            this.btnReceipt.BackColor = System.Drawing.Color.FromArgb(255, 152, 0);
-            this.btnReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReceipt.ForeColor = System.Drawing.Color.White;
-            this.btnReceipt.Location = new System.Drawing.Point(440, 45);
-            this.btnReceipt.Size = new System.Drawing.Size(80, 30);
-            this.btnReceipt.Text = "Receipt";
-            this.btnReceipt.Click += new System.EventHandler(this.btnReceipt_Click);
+            // this.btnReceipt.BackColor = System.Drawing.Color.FromArgb(255, 152, 0);
+            // this.btnReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            // this.btnReceipt.ForeColor = System.Drawing.Color.White;
+            // this.btnReceipt.Location = new System.Drawing.Point(440, 45);
+            // this.btnReceipt.Size = new System.Drawing.Size(80, 30);
+            // this.btnReceipt.Text = "Receipt";
+            // this.btnReceipt.Click += new System.EventHandler(this.btnReceipt_Click);
 
             // btnManageProducts
             this.btnManageProducts = new System.Windows.Forms.Button();
@@ -177,7 +179,7 @@
             this.Controls.Add(this.btnManageProducts);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.dgvCart);
-            this.Controls.Add(this.btnReceipt);
+            // this.Controls.Add(this.btnReceipt);
             this.Controls.Add(this.btnPurchase);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnDelete);
