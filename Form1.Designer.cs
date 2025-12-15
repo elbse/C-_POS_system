@@ -10,12 +10,11 @@
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnClear;
-
-        // private System.Windows.Forms.Button btnReceipt;
         private System.Windows.Forms.Button btnPurchase;
         private System.Windows.Forms.Button btnManageProducts;
         private System.Windows.Forms.DataGridView dgvCart;
         private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Label lblGrandTotal;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -50,6 +49,7 @@
             this.btnPurchase = new System.Windows.Forms.Button();
             this.dgvCart = new System.Windows.Forms.DataGridView();
             this.lblTotal = new System.Windows.Forms.Label();
+            this.lblGrandTotal = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -157,20 +157,29 @@
             this.dgvCart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCart.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCart_CellClick);
 
-            // lblTotal
+            // lblTotal - Subtotal
             this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
             this.lblTotal.ForeColor = System.Drawing.Color.FromArgb(76, 175, 80);
-            this.lblTotal.Location = new System.Drawing.Point(15, 420);
-            this.lblTotal.Size = new System.Drawing.Size(505, 30);
-            this.lblTotal.Text = "Total: $0.00";
+            this.lblTotal.Location = new System.Drawing.Point(15, 420); // slightly above bottom
+            this.lblTotal.Size = new System.Drawing.Size(505, 25);
+            this.lblTotal.Text = "Total: ₱0.00";
             this.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 
+            // lblGrandTotal - Total including tax
+            this.lblGrandTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblGrandTotal.ForeColor = System.Drawing.Color.FromArgb(33, 150, 243);
+            this.lblGrandTotal.Location = new System.Drawing.Point(15, 450); // below lblTotal
+            this.lblGrandTotal.Size = new System.Drawing.Size(505, 25);
+            this.lblGrandTotal.Text = "Grand Total (incl. tax): ₱0.00";
+            this.lblGrandTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+
+
             // Form1
-            this.ClientSize = new System.Drawing.Size(540, 470);
+            this.ClientSize = new System.Drawing.Size(540, 480);
             this.Controls.Add(this.btnManageProducts);
             this.Controls.Add(this.lblTotal);
+            this.Controls.Add(this.lblGrandTotal);
             this.Controls.Add(this.dgvCart);
-            // this.Controls.Add(this.btnReceipt);
             this.Controls.Add(this.btnPurchase);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnDelete);

@@ -324,7 +324,7 @@ namespace SimplePOS
             );
 
 
-            string receipt = "********** POS Receipt **********\n";
+            string receipt = "============ POS Receipt ============\n";
 
             foreach (DataRow row in cartTable.Rows)
             {
@@ -335,7 +335,7 @@ namespace SimplePOS
             receipt += $"SUBTOTAL: {subTotal:C2}\n";
             receipt += $"TAX (12%): {tax:C2}\n";
             receipt += $"TOTAL: {grandTotal:C2}\n";
-            receipt += "***************************************";
+            receipt += "=======================================\n";
 
             MessageBox.Show(receipt, "Receipt", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -397,13 +397,6 @@ namespace SimplePOS
             txtQuantity.Clear();
             cmbProduct.Focus();
         }
-
-
-        private void UpdateTotal()
-        {
-            lblTotal.Text = $"Total: {CalculateTotal():C2}";
-        }
-
         private decimal CalculateTotal()
         {
             decimal total = 0;
@@ -413,5 +406,19 @@ namespace SimplePOS
             }
             return total;
         }
+
+        private void UpdateTotal()
+        {
+            decimal subTotal = CalculateTotal();
+            lblTotal.Text = $"Total: {subTotal:C2}";
+
+            // Update grand total with tax
+            decimal tax = subTotal * TAX_RATE;
+            decimal grandTotal = subTotal + tax;
+            lblGrandTotal.Text = $"Grand Total (incl. tax): {grandTotal:C2}";
+        }
+
+
+        
     }
 }
