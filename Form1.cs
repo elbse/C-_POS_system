@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
 
 namespace SimplePOS
 {
@@ -294,58 +295,150 @@ namespace SimplePOS
                 return;
             }
 
-            // Process purchase - deduct quantities from inventory
-            foreach (DataRow row in cartTable.Rows)
-            {
-                string productName = row["Product"].ToString();
-                int cartQuantity = Convert.ToInt32(row["Quantity"]);
-
-                if (products.TryGetValue(productName, out Product product))
-                {
-                    product.Quantity -= cartQuantity;
-                }
-            }
-
             decimal subTotal = CalculateTotal();
             decimal tax = subTotal * TAX_RATE;
             decimal grandTotal = subTotal + tax;
 
-
-            //lastReceipt = GenerateReceipt(cartTable); //ADDED
-
-            MessageBox.Show(
-                $"Purchase successful!\n\n" +
-                $"Subtotal: {subTotal:C2}\n" +
-                $"Tax (12%): {tax:C2}\n" +
-                $"Total: {grandTotal:C2}",
-                "Purchase Complete",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+            // Show confirmation
+            DialogResult confirmResult = MessageBox.Show(
+                $"Total amount: {grandTotal:C2}\n\nComplete purchase?",
+                "Confirm Purchase",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
             );
 
+            if (confirmResult == DialogResult.Yes)
+            {
+                // Process purchase - deduct quantities from inventory
+                foreach (DataRow row in cartTable.Rows)
+                {
+                    string productName = row["Product"].ToString();
+                    int cartQuantity = Convert.ToInt32(row["Quantity"]);
 
-            string receipt = "============ POS Receipt ============\n";
+                    if (products.TryGetValue(productName, out Product product))
+                    {
+                        product.Quantity -= cartQuantity;
+                    }
+                }
 
+                // Show receipt window
+                ShowReceipt(subTotal, tax, grandTotal);
+
+                // Clear cart
+                cartTable.Rows.Clear();
+                UpdateTotal();
+                RefreshProductComboBox(); // Refresh to show updated stock
+            }
+        }
+
+        private void ShowReceipt(decimal subTotal, decimal tax, decimal grandTotal)
+        {
+            // Create receipt window
+            Form receiptWindow = new Form();
+            receiptWindow.Text = "Receipt";
+            receiptWindow.Size = new System.Drawing.Size(450, 550);
+            receiptWindow.FormBorderStyle = FormBorderStyle.FixedDialog;
+            receiptWindow.MaximizeBox = false;
+            receiptWindow.MinimizeBox = false;
+            receiptWindow.StartPosition = FormStartPosition.CenterParent;
+
+            // Receipt text box
+            TextBox receiptText = new TextBox();
+            receiptText.Multiline = true;
+            receiptText.ScrollBars = ScrollBars.Vertical;
+            receiptText.Font = new System.Drawing.Font("Courier New", 10);
+            receiptText.ReadOnly = true;
+            receiptText.Location = new System.Drawing.Point(10, 10);
+            receiptText.Size = new System.Drawing.Size(415, 450);
+
+            // Generate receipt content
+            string receipt = new string('=', 45) + "\r\n";
+            receipt += "           POS SYSTEM RECEIPT\r\n";
+            receipt += new string('=', 45) + "\r\n";
+            receipt += $"Date: {DateTime.Now:yyyy-MM-dd HH:mm:ss}\r\n";
+            receipt += new string('=', 45) + "\r\n\r\n";
+
+            receipt += $"{"Item",-20} {"Qty",-5} {"Price",-10} {"Total",-10}\r\n";
+            receipt += new string('-', 45) + "\r\n";
+
+            // Loop through cart items
             foreach (DataRow row in cartTable.Rows)
             {
-                receipt += $"{row["Product"]} x {row["Quantity"]} = {((decimal)row["Total"]):C2}\n";
+                string product = row["Product"].ToString();
+                int quantity = Convert.ToInt32(row["Quantity"]);
+                decimal price = Convert.ToDecimal(row["Price"]);
+                decimal total = Convert.ToDecimal(row["Total"]);
+
+                receipt += $"{product,-20} {quantity,-5} ₱{price,-9:F2} ₱{total,-9:F2}\r\n";
             }
 
-            receipt += "---------------------------------------\n";
-            receipt += $"SUBTOTAL: {subTotal:C2}\n";
-            receipt += $"TAX (12%): {tax:C2}\n";
-            receipt += $"TOTAL: {grandTotal:C2}\n";
-            receipt += "=======================================\n";
+            receipt += new string('-', 45) + "\r\n";
 
-            MessageBox.Show(receipt, "Receipt", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            receipt += $"\r\n{"Subtotal:",-35} ₱{subTotal,8:F2}\r\n";
+            receipt += $"{"Tax (12%):",-35} ₱{tax,8:F2}\r\n";
+            receipt += new string('=', 45) + "\r\n";
+            receipt += $"{"GRAND TOTAL:",-35} ₱{grandTotal,8:F2}\r\n";
+            receipt += new string('=', 45) + "\r\n\r\n";
+            receipt += "      Thank you for your purchase!\r\n";
+            receipt += "           Please come again!\r\n";
+            receipt += new string('=', 45) + "\r\n";
 
-            // Clear cart
-            cartTable.Rows.Clear();
-            UpdateTotal();
-            RefreshProductComboBox(); // Refresh to show updated stock
+            receiptText.Text = receipt;
 
+            // Print button
+            Button printBtn = new Button();
+            printBtn.Text = "Print";
+            printBtn.BackColor = System.Drawing.Color.FromArgb(92, 184, 92);
+            printBtn.ForeColor = System.Drawing.Color.White;
+            printBtn.FlatStyle = FlatStyle.Flat;
+            printBtn.Size = new System.Drawing.Size(140, 35);
+            printBtn.Location = new System.Drawing.Point(80, 470);
+            printBtn.Click += (s, e) => PrintReceipt(receipt);
 
+            // Close button
+            Button closeBtn = new Button();
+            closeBtn.Text = "Close";
+            closeBtn.BackColor = System.Drawing.Color.FromArgb(153, 153, 153);
+            closeBtn.ForeColor = System.Drawing.Color.White;
+            closeBtn.FlatStyle = FlatStyle.Flat;
+            closeBtn.Size = new System.Drawing.Size(140, 35);
+            closeBtn.Location = new System.Drawing.Point(230, 470);
+            closeBtn.Click += (s, e) => receiptWindow.Close();
+
+            // Add controls to form
+            receiptWindow.Controls.Add(receiptText);
+            receiptWindow.Controls.Add(printBtn);
+            receiptWindow.Controls.Add(closeBtn);
+
+            receiptWindow.ShowDialog();
         }
+
+        private void PrintReceipt(string receiptText)
+        {
+            // Create receipts folder if it doesn't exist
+            string folder = "receipts";
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            // Generate filename with timestamp
+            string filename = $"{folder}/receipt_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
+
+            try
+            {
+                File.WriteAllText(filename, receiptText);
+                MessageBox.Show($"Receipt saved to {filename}", "Success",
+                               MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to save receipt: {ex.Message}", "Error",
+                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        
 
         private void dgvCart_CellClick(object sender, DataGridViewCellEventArgs e)
         {

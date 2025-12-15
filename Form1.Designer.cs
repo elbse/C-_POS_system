@@ -85,6 +85,10 @@
             // txtPrice
             this.txtPrice.Location = new System.Drawing.Point(290, 12);
             this.txtPrice.Size = new System.Drawing.Size(80, 20);
+            this.txtPrice.Enabled = false;
+            this.txtPrice.BackColor = System.Drawing.Color.White;  
+            this.txtPrice.ForeColor = System.Drawing.Color.Black;  
+
 
             // label3
             this.label3.AutoSize = true;
