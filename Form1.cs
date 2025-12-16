@@ -225,38 +225,49 @@ namespace SimplePOS
                     return;
                 }
 
-                price = product.Price; // Use inventory price
+                // Update stock
+                product.Quantity -= quantityDifference;
+
+                // Update cart row
+                row.Cells["Product"].Value = productName;
+                row.Cells["Price"].Value = product.Price;
+                row.Cells["Quantity"].Value = quantity;
+                
             }
 
-            // Update selected row
-            DataGridViewRow selectedRow = dgvCart.SelectedRows[0];
-            selectedRow.Cells["Product"].Value = productName;
-            selectedRow.Cells["Price"].Value = price;
-            selectedRow.Cells["Quantity"].Value = quantity;
-
-            ClearInputs();
-            UpdateTotal();
+            
+            MessageBox.Show("Cart item updated successfully!",
+                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 
-        private void btnDelete_Click(object sender, EventArgs e)
+       private void btnDelete_Click(object sender, EventArgs e)
         {
             if (dgvCart.SelectedRows.Count > 0)
             {
                 dgvCart.Rows.RemoveAt(dgvCart.SelectedRows[0].Index);
                 ClearInputs();
                 UpdateTotal();
+
+                MessageBox.Show("Cart item deleted successfully!",
+                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Please select a row to delete.", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select a row to delete.",
+                    "Delete", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearInputs();
+
+            MessageBox.Show("Input fields cleared successfully!",
+                "Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         private const decimal TAX_RATE = 0.12m; // 12% tax
 
