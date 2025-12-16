@@ -113,9 +113,6 @@ namespace SimplePOS
         }
 
 
-
-
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             // Validate inputs
@@ -453,18 +450,18 @@ namespace SimplePOS
 
 
 
-        // Product Management Methods
+    
         private void AddProduct(string name, decimal price, int quantity)
         {
             if (products.ContainsKey(name))
             {
-                // Update existing product
+                
                 products[name].Price = price;
                 products[name].Quantity = quantity;
             }
             else
             {
-                // Add new product
+                
                 products[name] = new Product(name, price, quantity);
             }
             RefreshProductComboBox();
