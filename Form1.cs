@@ -262,11 +262,29 @@ namespace SimplePOS
 
         private void btnClear_Click(object sender, EventArgs e)
         {
+            // Check if there is anything to clear
+            if (string.IsNullOrWhiteSpace(cmbProduct.Text) &&
+                string.IsNullOrWhiteSpace(txtPrice.Text) &&
+                string.IsNullOrWhiteSpace(txtQuantity.Text))
+            {
+                MessageBox.Show(
+                    "There are no input fields to clear.",
+                    "Nothing to Clear",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            // Clear inputs
             ClearInputs();
 
-            MessageBox.Show("Input fields cleared successfully!",
-                "Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                "Input fields cleared successfully!",
+                "Cleared",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
+
 
 
         private const decimal TAX_RATE = 0.12m; // 12% tax
