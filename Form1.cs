@@ -7,13 +7,12 @@ using System.IO;
 
 namespace SimplePOS
 {
-    // Define a Product class with inventory tracking
+    
     public class Product
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public int Quantity { get; set; } // Stock quantity
-
+        public int Quantity { get; set; } 
         public Product(string name, decimal price, int quantity = 0)
         {
             Name = name;
@@ -30,7 +29,7 @@ namespace SimplePOS
     public partial class Form1 : Form
     {
         private DataTable cartTable;
-        private Dictionary<string, Product> products; // Store products by name for easy lookup
+        private Dictionary<string, Product> products; 
 
 
         public Form1()
@@ -42,10 +41,10 @@ namespace SimplePOS
 
         private void InitializeProducts()
         {
-            // Initialize product dictionary
+            
             products = new Dictionary<string, Product>(StringComparer.OrdinalIgnoreCase);
 
-            // Add some default products with stock
+            
             AddProduct("Apple", 15.00m, 50);
             AddProduct("Banana", 10.00m, 30);
             AddProduct("Milk", 25.49m, 20);
@@ -66,7 +65,7 @@ namespace SimplePOS
 
         private void InitializeCart()
         {
-            // Create a DataTable to store cart items
+            
             cartTable = new DataTable();
             cartTable.Columns.Add("Product");
             cartTable.Columns.Add("Price", typeof(decimal));
@@ -87,7 +86,7 @@ namespace SimplePOS
 
         private void cmbProduct_TextChanged(object sender, EventArgs e)
         {
-            // When user types, try to find matching product
+            
             UpdatePriceFromProduct();
         }
 
@@ -100,22 +99,21 @@ namespace SimplePOS
                 return;
             }
 
-            // Check if product exists in inventory
+            
             if (products.TryGetValue(productName, out Product product))
             {
                 txtPrice.Text = product.Price.ToString("F2");
             }
             else
             {
-                // Product doesn't exist, allow manual price entry
-                // Don't clear if user is typing
+                
             }
         }
 
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            // Validate inputs
+            
             if (string.IsNullOrWhiteSpace(cmbProduct.Text))
             {
                 MessageBox.Show("Please enter or select a product.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -136,40 +134,39 @@ namespace SimplePOS
 
             string productName = cmbProduct.Text.Trim();
 
-            //Check if product exists in inventory
+            
             if (products.TryGetValue(productName, out Product existingProduct))
             {
-                // Product exists - check stock availability
+                
                 if (existingProduct.Quantity < quantity)
                 {
                     MessageBox.Show($"Insufficient stock! Available: {existingProduct.Quantity}",
                         "Stock Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                // Use the product's price from inventory
+                
                 price = existingProduct.Price;
             }
             else
             {
-                // New product - add to inventory with the entered price
-                // Ask user if they want to add this as a new product
+                
                 DialogResult result = MessageBox.Show(
                     $"Product '{productName}' not found in inventory.\n\nWould you like to add it as a new product?",
                     "New Product", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-                    // Add new product to inventory (default stock: 0, user can update later)
+                    
                     AddProduct(productName, price, 0);
                     MessageBox.Show($"Product '{productName}' added to inventory.\nNote: Stock is 0. Please update stock if needed.",
                         "Product Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 
-            // Add to cart
+            
             cartTable.Rows.Add(productName, price, quantity);
 
-            // Clear inputs
+            
             cmbProduct.Text = "";
             txtPrice.Clear();
             txtQuantity.Clear();
@@ -188,7 +185,7 @@ namespace SimplePOS
                 return;
             }
 
-            // Validate inputs
+            
             if (string.IsNullOrWhiteSpace(cmbProduct.Text))
             {
                 MessageBox.Show("Please enter or select a product.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -209,15 +206,15 @@ namespace SimplePOS
 
             string productName = cmbProduct.Text.Trim();
 
-            // Check stock if product exists
+            
             if (products.TryGetValue(productName, out Product product))
             {
-                // Get old quantity from cart
+                
                 DataGridViewRow row = dgvCart.SelectedRows[0];
                 int oldQuantity = Convert.ToInt32(row.Cells["Quantity"].Value);
                 int quantityDifference = quantity - oldQuantity;
 
-                // Check if we have enough stock for the increase
+               
                 if (quantityDifference > 0 && product.Quantity < quantityDifference)
                 {
                     MessageBox.Show($"Insufficient stock! Available: {product.Quantity}",
@@ -225,10 +222,10 @@ namespace SimplePOS
                     return;
                 }
 
-                // Update stock
+                
                 product.Quantity -= quantityDifference;
 
-                // Update cart row
+                
                 row.Cells["Product"].Value = productName;
                 row.Cells["Price"].Value = product.Price;
                 row.Cells["Quantity"].Value = quantity;
@@ -275,7 +272,7 @@ namespace SimplePOS
                 return;
             }
 
-            // Clear inputs
+            
             ClearInputs();
 
             MessageBox.Show(
@@ -298,7 +295,7 @@ namespace SimplePOS
                 return;
             }
 
-            // Validate stock availability before purchase
+            
             List<string> stockIssues = new List<string>();
             foreach (DataRow row in cartTable.Rows)
             {
@@ -325,7 +322,7 @@ namespace SimplePOS
             decimal tax = subTotal * TAX_RATE;
             decimal grandTotal = subTotal + tax;
 
-            // Show confirmation
+            
             DialogResult confirmResult = MessageBox.Show(
                 $"Total amount: {grandTotal:C2}\n\nComplete purchase?",
                 "Confirm Purchase",
@@ -335,7 +332,7 @@ namespace SimplePOS
 
             if (confirmResult == DialogResult.Yes)
             {
-                // Process purchase - deduct quantities from inventory
+                
                 foreach (DataRow row in cartTable.Rows)
                 {
                     string productName = row["Product"].ToString();
@@ -347,7 +344,7 @@ namespace SimplePOS
                     }
                 }
 
-                // Show receipt window
+                
                 ShowReceipt(subTotal, tax, grandTotal);
 
                 // Clear cart
@@ -359,7 +356,7 @@ namespace SimplePOS
 
         private void ShowReceipt(decimal subTotal, decimal tax, decimal grandTotal)
         {
-            // Create receipt window
+            
             Form receiptWindow = new Form();
             receiptWindow.Text = "Receipt";
             receiptWindow.Size = new System.Drawing.Size(450, 550);
@@ -368,7 +365,7 @@ namespace SimplePOS
             receiptWindow.MinimizeBox = false;
             receiptWindow.StartPosition = FormStartPosition.CenterParent;
 
-            // Receipt text box
+           
             TextBox receiptText = new TextBox();
             receiptText.Multiline = true;
             receiptText.ScrollBars = ScrollBars.Vertical;
@@ -377,7 +374,7 @@ namespace SimplePOS
             receiptText.Location = new System.Drawing.Point(10, 10);
             receiptText.Size = new System.Drawing.Size(415, 450);
 
-            // Generate receipt content
+            
             string receipt = new string('=', 45) + "\r\n";
             receipt += "           POS SYSTEM RECEIPT\r\n";
             receipt += new string('=', 45) + "\r\n";
@@ -387,7 +384,7 @@ namespace SimplePOS
             receipt += $"{"Item",-20} {"Qty",-5} {"Price",-10} {"Total",-10}\r\n";
             receipt += new string('-', 45) + "\r\n";
 
-            // Loop through cart items
+            
             foreach (DataRow row in cartTable.Rows)
             {
                 string product = row["Product"].ToString();
@@ -411,7 +408,7 @@ namespace SimplePOS
 
             receiptText.Text = receipt;
 
-            // Print button
+            
             Button printBtn = new Button();
             printBtn.Text = "Print";
             printBtn.BackColor = System.Drawing.Color.FromArgb(92, 184, 92);
@@ -421,7 +418,7 @@ namespace SimplePOS
             printBtn.Location = new System.Drawing.Point(80, 470);
             printBtn.Click += (s, e) => PrintReceipt(receipt);
 
-            // Close button
+            
             Button closeBtn = new Button();
             closeBtn.Text = "Close";
             closeBtn.BackColor = System.Drawing.Color.FromArgb(153, 153, 153);
@@ -431,7 +428,7 @@ namespace SimplePOS
             closeBtn.Location = new System.Drawing.Point(230, 470);
             closeBtn.Click += (s, e) => receiptWindow.Close();
 
-            // Add controls to form
+            
             receiptWindow.Controls.Add(receiptText);
             receiptWindow.Controls.Add(printBtn);
             receiptWindow.Controls.Add(closeBtn);
@@ -441,14 +438,14 @@ namespace SimplePOS
 
         private void PrintReceipt(string receiptText)
         {
-            // Create receipts folder if it doesn't exist
+            
             string folder = "receipts";
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
             }
 
-            // Generate filename with timestamp
+            
             string filename = $"{folder}/receipt_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
 
             try
@@ -531,7 +528,7 @@ namespace SimplePOS
             decimal subTotal = CalculateTotal();
             lblTotal.Text = $"Total: {subTotal:C2}";
 
-            // Update grand total with tax
+            
             decimal tax = subTotal * TAX_RATE;
             decimal grandTotal = subTotal + tax;
             lblGrandTotal.Text = $"Grand Total (incl. tax): {grandTotal:C2}";
